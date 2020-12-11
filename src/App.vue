@@ -40,7 +40,7 @@ export default {
     fetch("https://localhost:44378/Spend/GetItems")
     .then(response => {
         if (response.status === 200) {
-          response.json().then(json => { console.log(json.Data); this.spends = json.Data;})
+          response.json().then(json => this.spends = json.Data)
         }
       })
   },
