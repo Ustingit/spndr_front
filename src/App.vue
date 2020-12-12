@@ -64,13 +64,37 @@ export default {
   },
   methods: {
     rmSpend(id) {
-      this.spends = this.spends.filter(x => x.id !== id);
+      fetch("https://localhost:44378/Spend/DeleteSpend/" + id, {
+        method: 'DELETE'
+      }).then(response => {
+        if (response.status === 200) {
+          response.json().then(json => {
+            if (json.success === true) {
+                this.spends = this.spends.filter(x => x.id !== id);
+            }
+          })
+        } 
+      })
     },
     addSpend(newItem) {
-      const maxId = this.spends.sort((a,b) => b['id'] - a['id'])[0]['id'] + 1;
-      newItem.id = maxId;
-
-      this.spends.push(newItem);
+      console.log(itemToSent)
+      fetch("https://localhost:44378/Spend/AddSpend", {
+        method: 'POST',
+        body: JSON.stringify(newItem),
+        headers: {
+          "Accept": "application/json, text/plain, */*",
+          "Content-Type": "application/json"
+        }
+      }).then(response => {
+        if (response.status === 200) {
+          response.json().then(json => {
+            if (json.success === true) {
+                newItem.id = json.data.id;
+                this.spends.push(newItem);
+            }
+          })
+        }
+      })
     }
   }
 }
