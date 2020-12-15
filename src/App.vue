@@ -33,14 +33,21 @@ export default {
   data() {
     return {
       type: "all",
-      spends: []
+      spends: [],
+      incomeSubTypes: [],
+      outcomeSubTypes: [],
     }
   },
   mounted() {
-    fetch("https://localhost:44378/Spend/GetItems")
+    fetch("https://localhost:44378/Spend/GetStartingData")
     .then(response => {
         if (response.status === 200) {
-          response.json().then(json => this.spends = json.Data)
+          response.json().then(json => {
+            console.log(json);
+            this.spends = json.data.Data;
+            this.incomeSubTypes = json.incomeSubTypes;
+            this.outcomeSubTypes = json.outcomeSubTypes;
+          })
         }
       })
   },
