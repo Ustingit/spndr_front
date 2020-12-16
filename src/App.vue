@@ -3,6 +3,8 @@
     <h1>$ SPNDR APP $</h1>
     <hr />
     <AddSpend 
+      v-bind:incomeSubTypes="incomeSubTypes"
+      v-bind:outcomeSubTypes="outcomeSubTypes"
       v-on:add-spend="addSpend"
      />
     <h2>Траты:</h2>
@@ -43,7 +45,6 @@ export default {
     .then(response => {
         if (response.status === 200) {
           response.json().then(json => {
-            console.log(json);
             this.spends = json.data.Data;
             this.incomeSubTypes = json.incomeSubTypes;
             this.outcomeSubTypes = json.outcomeSubTypes;
